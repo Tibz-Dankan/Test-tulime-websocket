@@ -8,6 +8,7 @@ export const TulimeWebSocketClient: React.FC = () => {
   useEffect(() => {
     // Create WebSocket connection
     const socket = new WebSocket("ws://127.0.0.1:5000/ws");
+    // const socket = new WebSocket("wss://api.tuliime.com/ws");
     console.log("Attempting Connection...");
 
     // Connection opened
