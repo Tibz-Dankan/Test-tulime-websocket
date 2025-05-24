@@ -7,16 +7,32 @@ export const TulimeWebSocketClient: React.FC = () => {
 
   useEffect(() => {
     // Create WebSocket connection
-    const socket = new WebSocket("ws://127.0.0.1:5000/ws");
-    // const socket = new WebSocket("wss://api.tuliime.com/ws");
+    // const socket = new WebSocket(
+    //   "ws://127.0.0.1:5000/ws?userID=efe31267-f68b-48f7-922f-fbafb4dc3610"
+    // );
+    const socket = new WebSocket(
+      "wss://api.tuliime.com/ws?userID=d1e05e1e-b0c8-4a54-b35e-d0060af43a5d"
+    );
     console.log("Attempting Connection...");
 
     // Connection opened
     socket.onopen = () => {
       console.log("Successfully Connected");
       setConnectionStatus("Connected");
-      socket.send("Hi From the Tuliime web Client!");
-      setMessages((prev) => [...prev, "Sent: Hi From the Tuliime web Client!"]);
+      const onlineStatus = {
+        // id: "efe31267-f68b-48f7-922f-fbafb4dc3610",
+        // userID: "efe31267-f68b-48f7-922f-fbafb4dc3610", //local
+        userID: "d1e05e1e-b0c8-4a54-b35e-d0060af43a5d", //Prod
+        updatedAt: new Date().toISOString(),
+        // createdAt: new Date().toISOString(),
+        // updatedAt: toRFC3339(new Date()),
+        // createdAt: toRFC3339(new Date())
+      };
+      // socket.send("Hi From the Tuliime web Client!");
+      socket.send(JSON.stringify(onlineStatus));
+
+      // setMessages((prev) => [...prev, "Sent: Hi From the Tuliime web Client!"]);
+      setMessages((prev) => [...prev, JSON.stringify(onlineStatus)]);
     };
 
     // Listen for messages
